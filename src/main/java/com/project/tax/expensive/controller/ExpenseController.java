@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/expenses")
+@RequestMapping("/1.0/expenses")
 @RequiredArgsConstructor
 @Tag(name = "Expense API", description = "지출 관리 API")
 public class ExpenseController {
