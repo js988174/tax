@@ -1,0 +1,50 @@
+package com.project.tax.filter;
+
+import com.project.tax.common.jwt.JwtProvider;
+
+import com.project.tax.common.jwt.UserPrincipal;
+import jakarta.servlet.*;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
+
+import java.io.IOException;
+
+
+@RequiredArgsConstructor
+public class JwtFilter extends GenericFilter {
+
+    private final JwtProvider jwtProvider;
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        HttpServletRequest req = (HttpServletRequest) request;
+
+        String token = resolveToken(req);
+
+        if (token != null) {
+            String email = jwtProvider.getEmail(token);
+
+            UserPrincipal principal = new UserPrincipal(email);
+
+            SecurityContextHolder.getContext()
+                    .setAuthentication(principal.getAuthentication());
+        }
+
+        chain.doFilter(request, response);
+    }
+
+    private String resolveToken(HttpServletRequest request) {
+        String bearer = request.getHeader("Authorization");
+
+        if (StringUtils.hasText(bearer) && bearer.startsWith("Bearer ")) {
+            return bearer.substring(7);
+        }
+
+        return null;
+    }
+
+}
