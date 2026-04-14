@@ -9,6 +9,7 @@ import com.project.tax.expensive.service.ExpenseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,8 +25,9 @@ public class ExpenseController {
 
     @Operation(summary = "지출 생성", description = "지출 데이터를 생성합니다.")
     @PostMapping
-    public ExpenseResEntity create(@RequestBody ExpenseReqEntity req) {
-        ExpenseEntity expense = service.create(req);
+    public ExpenseResEntity create(@RequestBody ExpenseReqEntity req,  Authentication auth) {
+        String email = auth.getName();
+        ExpenseEntity expense = service.create(req, email);
         return ExpenseMapper.toResponse(expense);
     }
 

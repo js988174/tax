@@ -9,10 +9,6 @@ import lombok.Getter;
 public class ExpenseReqEntity {
 
     @NotNull
-    @Schema(description = "사용자 ID", example = "1001")
-    private Long userId;
-
-    @NotNull
     @Schema(description = "카테고리", example = "식비")
     private String category;
 
