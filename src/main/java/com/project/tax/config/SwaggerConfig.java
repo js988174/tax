@@ -15,7 +15,7 @@ public class SwaggerConfig {
 
     @Bean
     public GroupedOpenApi chatOpenApi() {
-        String[] paths = {"/1.0/**"};
+        String[] paths = {"/**"};
         return GroupedOpenApi.builder()
             .group("tax API v1")
             .pathsToMatch(paths)

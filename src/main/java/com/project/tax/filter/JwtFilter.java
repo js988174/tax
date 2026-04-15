@@ -23,6 +23,14 @@ public class JwtFilter extends GenericFilter {
 
         HttpServletRequest req = (HttpServletRequest) request;
 
+        String path = req.getRequestURI();
+
+        // 🔥 로그인/회원가입은 필터 패스
+        if (path.startsWith("/auth")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
         String token = resolveToken(req);
 
         if (token != null) {
@@ -46,5 +54,4 @@ public class JwtFilter extends GenericFilter {
 
         return null;
     }
-
 }

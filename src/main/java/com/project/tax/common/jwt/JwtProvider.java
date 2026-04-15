@@ -9,7 +9,7 @@ import java.util.Date;
 @Component
 public class JwtProvider {
 
-    private final String SECRET = "secret-key";
+    private final String SECRET = "bXlzZWNyZXRrZXlteXNlY3JldGtleW15c2VjcmV0a2V5";
     private final long EXP = 1000 * 60 * 60; // 1시간
 
     public String createToken(String email) {
