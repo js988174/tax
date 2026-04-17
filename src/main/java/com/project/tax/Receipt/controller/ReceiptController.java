@@ -6,6 +6,7 @@ import com.project.tax.expensive.entity.db.ExpenseEntity;
 import com.project.tax.expensive.entity.res.ExpenseResEntity;
 import com.project.tax.expensive.mapper.ExpenseMapper;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -20,7 +21,11 @@ public class ReceiptController {
 
     private final ReceiptService service;
 
-    @Operation(summary = "영수증 업로드", description = "이미지를 업로드하고 OCR 결과를 반환")
+    @Operation(
+            summary = "영수증 업로드",
+            description = "이미지를 업로드하고 OCR 결과를 반환"
+    )
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping(value = "/upload", consumes = "multipart/form-data")
     public ExpenseResEntity upload(@RequestPart("file") MultipartFile file, Authentication auth) {
         String email = auth.getName();

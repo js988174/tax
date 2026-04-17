@@ -23,6 +23,8 @@ public class JwtFilter extends GenericFilter {
 
         HttpServletRequest req = (HttpServletRequest) request;
 
+        System.out.println("Authorization: " + req.getHeader("Authorization"));
+
         String path = req.getRequestURI();
 
         // 🔥 로그인/회원가입은 필터 패스
@@ -41,6 +43,8 @@ public class JwtFilter extends GenericFilter {
             SecurityContextHolder.getContext()
                     .setAuthentication(principal.getAuthentication());
         }
+
+        System.out.println("Authorization: " + req.getHeader("Authorization"));
 
         chain.doFilter(request, response);
     }
