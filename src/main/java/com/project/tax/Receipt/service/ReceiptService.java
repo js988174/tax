@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -40,13 +41,18 @@ public class ReceiptService {
                     .orElseThrow();
 
             // 2. 이미지 저장
-            String imageUrl = fileStorageService.save(file);
+            // todo : 이미지 서버 외부 저장 나중에 추가
+            String dir = System.getProperty("user.dir") + "/uploads/";
 
-            // 3. OCR
-            File temp = File.createTempFile("receipt", ".jpg");
-            file.transferTo(temp);
+            File folder = new File(dir);
+            if (!folder.exists()) folder.mkdirs();
 
-            String text = ocrService.extractText(temp);
+            String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+            File savedFile = new File(dir + fileName);
+
+            file.transferTo(savedFile);
+
+            String text = ocrService.extractText(savedFile);
 
             // 4. 파싱
             int amount = parser.extractAmount(text);
@@ -65,7 +71,7 @@ public class ReceiptService {
                     .merchant(merchant)
                     .date(LocalDate.now())
                     .isDeductible(false)
-                    .imageUrl(imageUrl)
+                    .imageUrl(fileName)
                     .category(category)
                     .build();
 

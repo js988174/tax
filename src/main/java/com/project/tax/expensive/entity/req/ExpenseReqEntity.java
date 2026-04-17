@@ -1,5 +1,6 @@
 package com.project.tax.expensive.entity.req;
 
+import com.project.tax.Receipt.entity.db.CategoryEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -12,7 +13,7 @@ public class ExpenseReqEntity {
 
     @NotNull
     @Schema(description = "카테고리", example = "식비")
-    private String category;
+    private CategoryEntity category;
 
     @NotNull
     @Schema(description = "금액", example = "12000")

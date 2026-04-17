@@ -12,7 +12,13 @@ public class FileUpload {
 
     public String save(MultipartFile file) throws IOException {
 
-        String dir = "uploads/";
+        String dir = System.getProperty("user.dir") + "/uploads/";
+
+        File folder = new File(dir);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+
         String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
 
         File dest = new File(dir + fileName);

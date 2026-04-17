@@ -40,4 +40,13 @@ public class ExpenseController {
                 .collect(Collectors.toList());
     }
 
+    @Operation(summary = "카테고리 분류", description = "사용자의 관심 카테고리를 분류합니다.")
+    @PostMapping("/expense/{id}/category")
+    public void updateCategory(
+            @PathVariable Long id,
+            @RequestParam String categoryName
+    ) {
+        service.updateCategory(id, categoryName);
+    }
+
 }

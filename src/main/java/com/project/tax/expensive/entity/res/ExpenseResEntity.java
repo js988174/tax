@@ -1,5 +1,6 @@
 package com.project.tax.expensive.entity.res;
 
+import com.project.tax.Receipt.entity.db.CategoryEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,7 @@ public class ExpenseResEntity {
     private Long id;
 
     @Schema(description = "카테고리", example = "식비")
-    private String category;
+    private CategoryEntity category;
 
     @Schema(description = "금액", example = "12000")
     private int amount;
